@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 var bson = require('bson');
 var util = require('util');
-var uuid = require('node-uuid');
+var uuidParse = require('uuid-parse');
 
 var Document = mongoose.Document;
 
@@ -11,7 +11,7 @@ function getter (binary){
   if(!binary) return undefined;
   if(!(binary instanceof mongoose.Types.Buffer.Binary)) return binary;
 
-  
+
   var len = binary.length();
 
   var b = binary.read(0,len);
@@ -67,7 +67,7 @@ SchemaUUID.prototype.cast = function (value, doc, init) {
     if (value instanceof mongoose.Types.Buffer.Binary) {
       return value;
     } else if (typeof value === 'string') {
-      var uuidBuffer = new mongoose.Types.Buffer(uuid.parse(value));
+      var uuidBuffer = new mongoose.Types.Buffer(uuidParse.parse(value));
       uuidBuffer.subtype(bson.Binary.SUBTYPE_UUID);
       return uuidBuffer.toObject();
     } else if (Buffer.isBuffer(value) || !util.isObject(value)) {
@@ -103,7 +103,7 @@ SchemaUUID.prototype.cast = function (value, doc, init) {
   var uuidBuffer;
 
   if (typeof value === 'string') {
-    uuidBuffer = new mongoose.Types.Buffer(uuid.parse(value));
+    uuidBuffer = new mongoose.Types.Buffer(uuidParse.parse(value));
     uuidBuffer.subtype(bson.Binary.SUBTYPE_UUID);
     return uuidBuffer.toObject();
   }
