@@ -1,4 +1,4 @@
-var uuid = require('node-uuid');
+var uuidv4 = require('uuid/v4');
 var mongoose = require('mongoose');
 var bson = require('bson');
 var should = require('chai').should();
@@ -8,7 +8,7 @@ require('../index')(mongoose);
 var UUID = mongoose.Types.UUID;
 
 var ProductSchema = Schema({
-  _id: { type: UUID, default: uuid.v4 },
+  _id: { type: UUID, default: uuidv4 },
   name: String
 }, { id: false });
 
@@ -73,7 +73,7 @@ describe('mongoose-uuid', function(){
 
   describe('query population', function() {
     var PetSchema = Schema({
-      _id: { type: UUID, default: uuid.v4 },
+      _id: { type: UUID, default: uuidv4 },
       name: String,
     }, { id: false });
 
@@ -83,7 +83,7 @@ describe('mongoose-uuid', function(){
     var Pet = mongoose.model('Pet', PetSchema);
 
     var PhotoSchema = Schema({
-      _id: { type: UUID, default: uuid.v4 },
+      _id: { type: UUID, default: uuidv4 },
       filename: String,
       pet: { type: UUID, ref: 'Pet', required: true }
     }, { id: false });
@@ -124,11 +124,11 @@ describe('mongoose-uuid', function(){
   });
 
   describe('other scenarios', function() {
-    var uuidBuffer = new mongoose.Types.Buffer(uuid.v4());
+    var uuidBuffer = new mongoose.Types.Buffer(uuidv4());
     uuidBuffer.subtype(bson.Binary.SUBTYPE_UUID);
 
     var BoatSchema = Schema({
-      _id: { type: UUID, default: uuid.v4 },
+      _id: { type: UUID, default: uuidv4 },
       dingy: { type: UUID, ref: 'Boat' },
       name: String,
     }, { id: false });
