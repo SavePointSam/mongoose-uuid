@@ -19,11 +19,11 @@ var Product = mongoose.model('Product', ProductSchema);
 
 describe('mongoose-uuid', function(){
   before(function() {
-    return mongoose.connect('mongodb://localhost:27017/mongoose-uuid-test')
+    return mongoose.connect('mongodb://localhost:27017/mongoose-uuid-test', { useNewUrlParser: true })
   })
 
   after(function(cb) {
-    Product.remove({}, function() {
+    Product.deleteMany({}, function() {
       mongoose.disconnect(cb);
     });
   });
@@ -108,8 +108,8 @@ describe('mongoose-uuid', function(){
     })
 
     after(function(cb) {
-      Pet.remove(function() {
-        Photo.remove({}, cb);
+      Pet.deleteMany(function() {
+        Photo.deleteMany({}, cb);
       })
 
     });
@@ -138,7 +138,7 @@ describe('mongoose-uuid', function(){
     var Boat = mongoose.model('Boat', BoatSchema);
 
     afterEach(function(cb) {
-      Boat.remove(cb);
+      Boat.deleteMany({}, cb);
     });
 
     it('should get with no value', function() {
