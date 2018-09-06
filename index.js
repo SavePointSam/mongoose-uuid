@@ -68,7 +68,7 @@ SchemaUUID.prototype.castForQuery = function($conditional, val) {
     handler = this.$conditionalHandlers[$conditional];
 
     if (!handler) {
-      throw new Error("Can't use " + $conditional + " with Buffer.");
+      throw new Error("Can't use " + $conditional + " with UUID.");
     }
 
     return handler.call(this, val);
